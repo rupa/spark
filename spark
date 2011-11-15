@@ -98,7 +98,6 @@ print_tick()
   do
     tick=${ticks[$i]}
     number=${1:-0}
-    echo $number
     less_than=$(echo "$i * $tier + sort_min + $tier" | bc)
     greater_than=$(echo "($i - 1) * $tier + sort_min + $tier" | bc)
     result=$(echo "$number <= $less_than && $number >= $greater_than" | bc)
