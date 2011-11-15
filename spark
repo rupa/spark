@@ -30,9 +30,9 @@ set -e
 # Returns nothing.
 help()
 {
-  echo "spark\n"
+  echo "spark"
   echo "USAGE:"
-  echo "  spark [comma,separated,value,list]\n"
+  echo "  spark [comma,separated,value,list]"
   echo "EXAMPLES:"
   echo "  spark 1,5,22,13,53"
   echo "  ▁▁▃▂▇"
@@ -94,10 +94,13 @@ print_tick()
   for (( i = 0 ; i < ${#numbers[@]} ; i++ ))
   do
     tick=${ticks[$i]}
-    number=$1
+    number=${1:-0}
+    echo $number
     less_than=$(echo "$i * $tier + sort_min + $tier" | bc)
     greater_than=$(echo "($i - 1) * $tier + sort_min + $tier" | bc)
     result=$(echo "$number <= $less_than && $number >= $greater_than" | bc)
+
+    [ $result ] || continue
 
     if [ $result -eq 1 ]
     then
@@ -117,7 +120,7 @@ print_ticks()
 {
   for number in ${numbers[@]}
   do
-    echo $"$(print_tick $number)\c"
+    printf "%s" $"$(print_tick $number)"
   done
   echo ""
 }
